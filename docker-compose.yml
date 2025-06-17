@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:15
+    container_name: nestjs-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: nestjs_blog
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
