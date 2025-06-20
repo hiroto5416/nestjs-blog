@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from './prisma/prisma.service';
 import { PrismaModule } from './prisma/prisma.module';
+import { PostsModule } from './posts/posts.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { PrismaModule } from './prisma/prisma.module';
       envFilePath: [`.env.${process.env.NODE_ENV}`, '.env'],
     }),
     PrismaModule,
+    PostsModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
