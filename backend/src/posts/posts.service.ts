@@ -2,11 +2,11 @@ import { Injectable, Logger } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class PostsService {
   constructor(private readonly prisma: PrismaService) {}
-
   private readonly logger = new Logger(PostsService.name);
 
   create(createPostDto: CreatePostDto) {
@@ -18,8 +18,10 @@ export class PostsService {
     return this.prisma.post.findMany();
   }
 
-  findOne(id: number) {
-    return this.prisma.post.findUnique({ where: { id } });
+  async findOne(id: number) {
+    const post = await this.prisma.post.findUnique({ where: { id } });
+    if (!post) throw new NotFoundException(`Post with ID ${id} not found`);
+    return post;
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {
