@@ -1,9 +1,19 @@
 import "./App.css";
+import { PostForm } from "./components/PostForm";
+import { PostList } from "./components/PostList";
+import { useState } from "react";
 
 function App() {
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  function handlePostCreated() {
+    setRefreshKey((prev) => prev + 1);
+  }
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-blue-100">
-      <h1 className="text-4xl font-bold text-blue-800">Frontend is working!</h1>
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center p-8">
+      <PostForm onPostCreated={handlePostCreated} />
+      <PostList key={refreshKey} />
     </div>
   );
 }
